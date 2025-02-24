@@ -193,7 +193,7 @@ const ChatWindow = ({ selectedChat, stompClient, fetchChatList, existingMessages
           Send
         </Button>
       </div>
-      <GroupCreationModal visible={isModalVisible} userList={userList} selectedChat={selectedChat} closeGroupModal={closeGroupModal} />
+      <GroupCreationModal visible={isModalVisible} userList={userList} selectedChat={selectedChat} closeGroupModal={closeGroupModal} fetchChatList={fetchChatList} />
     </div>
   );
 };

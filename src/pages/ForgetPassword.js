@@ -19,7 +19,7 @@ const ForgetPassword = () => {
         setLoading(true);
         service.create(values).then((res) => {
         }).catch((err) => {
-            message.error(err.response?.data || "Login failed. Please try again.");
+            message.error("Unable to send Mail. Please try again.");
         }).finally(() => {
             setLoading(false);
         })
