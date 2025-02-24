@@ -1,70 +1,132 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 💬 Real-Time Chat Application - Frontend
 
-## Available Scripts
+This is the frontend for the Real-Time Messaging Web App, built using **React.js**, **SockJS**, and **StompJS** for real-time messaging.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Features
+- 🔐 **User Authentication** (Login, Logout, JWT Handling)
+- 📬 **Real-Time Messaging** (One-on-One & Group Chats)
+- 👥 **Group Management** (Admins, Add/Remove Users)
+- 📊 **Unread Messages Count**
+- 📡 **WebSocket-Based Live Chat**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Tech Stack
+- **Frontend**: React.js, React Router
+- **WebSockets**: SockJS, StompJS
+- **State Management**: React State
+- **UI Library**: Ant Desing
+- **Authentication**: JWT (stored in cookies)
+- **Backend**: Spring Boot (see backend README)
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📂 Project Structure
+```
+CHAT-APP-REACT/
+│── node_modules/           # Dependencies installed via npm
+│── public/                 # Static files (index.html, icons, etc.)
+│── src/                    # Source code directory
+│   ├── components/         # Reusable React components
+│   ├── pages/              # Page components for routing
+│   ├── service/            # API service files (handling API calls)
+│   ├── styles/             # CSS/SCSS stylesheets
+│   ├── App.css             # Global styles for the App component
+│   ├── App.js              # Root React component
+│   ├── App.test.js         # Tests for the App component
+│   ├── index.css           # Global styles
+│   ├── index.js            # Entry point of the React app
+│   ├── logo.svg            # Logo asset
+│   ├── reportWebVitals.js  # Performance reporting
+│   ├── routes.js           # Route definitions for the app
+│   ├── setupTests.js       # Test setup file
+│── .env                    # Environment variables
+│── .gitattributes          # Git attributes configuration
+│── .gitignore              # Files to ignore in Git
+│── package-lock.json       # Lock file for npm dependencies
+│── package.json            # Project metadata and dependencies
+│── README.md               # Project documentation
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🔧 Setup & Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1️⃣ Prerequisites
+- Install **Node.js** (>= 16.x)
+- Install **npm** or **yarn**
 
-### `npm run eject`
+### 2️⃣ Clone Repository
+```sh
+git clone https://github.com/Vigneshkumar-D/chat-app-ui.git
+cd chat-app-ui
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3️⃣ Install Dependencies
+```sh
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 4️⃣ Configure Environment Variables
+Create a `.env` file:
+```env
+REACT_APP_URL=http://localhost:4001
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 5️⃣ Start Frontend
+```sh
+npm start
+```
+The app runs on: **`http://localhost:3000`**  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## **WebSocket Integration**
+This project uses **SockJS** and **STOMP.js** for real-time chat functionality.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### **WebSocket Connection Setup**
+The WebSocket connection is established in `pages/home.js`:
 
-### Code Splitting
+```javascript
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ const socket = new SockJS(this.webSocketService.url);
+const stompClient = new Client({
+    webSocketFactory: () => socket,
+    reconnectDelay: 5000,
+});
 
-### Analyzing the Bundle Size
+export default stompClient;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 📮 API Endpoints Used
+| Method | Endpoint | Description |
+|--------|---------|------------|
+| `POST` | `/api/auth/login` | Authenticate user |
+| `POST` | `/api/chat/create` | Create a new chat |
+| `GET` | `/api/chat/list` | Fetch user’s chat list |
+| `POST` | `/api/message/send` | Send a chat message |
+| `GET` | `/api/message/history/{chatId}` | Get chat history |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 📸 Screenshots
+### 💬 Chat Interface  
+![image](https://github.com/user-attachments/assets/4bb030a6-3feb-44bf-b498-16f738abb5cb)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Register Screen 
+![image](https://github.com/user-attachments/assets/c0978250-5802-412b-95bf-58d0b97d1387)
 
-### Deployment
+### 🔐 Login Screen  
+![image](https://github.com/user-attachments/assets/4ee57c51-863d-4db3-826a-03cd6601f50c)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
