@@ -14,9 +14,7 @@ const Register = () => {
     const service = new RegistrationService();
 
     const onFinish = (values) => {
-        const {password, confirmPassword} = values;
-        console.log("data ", values);
-        
+        const {password, confirmPassword} = values;    
         if(password===confirmPassword){
             setLoading(true);
             service.post(values).then((res) => {

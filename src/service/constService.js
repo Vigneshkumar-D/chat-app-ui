@@ -1,4 +1,6 @@
+const rootUrl = process.env.REACT_APP_API;
 const baseUrl = process.env.REACT_APP_API + "/api";
+
 
 // Login
 export const LOGIN_URL = baseUrl + "/auth/login";
@@ -12,7 +14,7 @@ export const MESSAGE_URL = baseUrl + "/messages/send";
 export const CHAT_LIST_URL = baseUrl + "/chats/list";
 export const GROUP_CHAT_URL = baseUrl + "/chats";
 export const CHAT_HISTORY_URL = baseUrl + "/messages/chat";
-export const WEBSOCKET_URL = baseUrl + "/ws"
+export const WEBSOCKET_URL = rootUrl+"/ws";
 
 //User
 export const USER_URL = baseUrl + "/users";

@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import ForgetPasswordService from '../service/auth/forgotPasswordService';
 import { IoMdArrowBack } from 'react-icons/io';
-import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { MailOutlined, UserOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -18,7 +18,6 @@ const ForgetPassword = () => {
     const onFinish = (values) => {
         setLoading(true);
         service.create(values).then((res) => {
-            console.log("fp", values, res);
         }).catch((err) => {
             message.error(err.response?.data || "Login failed. Please try again.");
         }).finally(() => {

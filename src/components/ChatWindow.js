@@ -53,8 +53,6 @@ const ChatWindow = ({ selectedChat, stompClient, fetchChatList, existingMessages
   const [messages, setMessages] = useState();
   const messageContainerRef = useRef(null);
   const groupChatService = new GroupChatService();
-  console.log("stompClient", stompClient);
-
 
   useEffect(() => {
     if (selectedChat?.id) {
@@ -70,7 +68,6 @@ const ChatWindow = ({ selectedChat, stompClient, fetchChatList, existingMessages
 
   useEffect(() => {
     if (!selectedChat?.id) return;
-
     groupChatService.getById(selectedChat.id).then((res) => {
       const isAdmin = res.data?.data?.admins?.some(admin => admin.id === Number(currentUserId));
       setIsAdmin(isAdmin);
@@ -109,8 +106,6 @@ const ChatWindow = ({ selectedChat, stompClient, fetchChatList, existingMessages
   };
 
   const getMessageStatus = (msg) => {
-    console.log("msg ", msg.chat.status);
-
     if (msg.sender.id !== Number(currentUserId)) return null;
 
     switch (msg.chat.status) {

@@ -19,6 +19,7 @@ import { TiGroupOutline } from "react-icons/ti";
 import "../styles/global.css";
 import "../styles/home.css";
 import { FaRegCircleUser } from "react-icons/fa6";
+import WebSocketService from "../service/chat/webSockerService";
 
 const { Header } = Layout;
 const style = {
@@ -102,6 +103,7 @@ class Home extends Component {
     this.currentUserService = new CurrentUserService();
     this.chatHistoryService = new ChatHistoryService();
     this.logoutService = new LogoutService();
+    this.webSocketService =  new WebSocketService()
     this.stompClient = null;
   }
 
@@ -130,8 +132,6 @@ class Home extends Component {
 
   handleIncomingMessage = (message) => {
     const parsedMessage = JSON.parse(message.body);
-    const ts = new Date().getTime();
-    console.log("Received Message: ", ts, parsedMessage);
     this.setState((prevState) => ({
       chatHistory: [...prevState.chatHistory, parsedMessage],
     }));
@@ -173,36 +173,26 @@ class Home extends Component {
       console.log("WebSocket already connected.");
       return;
     }
-
-    const socket = new SockJS("http://localhost:4001/ws");
+    const socket = new SockJS(this.webSocketService.url);
     this.stompClient = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: (frame) => {
-        console.log("Connected:", frame);
-
         const userId = Cookies.get("user_id");
         const { chatList } = this.state;
-
         this.subscribedChats = new Set();
-
         chatList.forEach((chat) => {
-          console.log("chat.isGroup", chat.isGroup);
-
           const chatTopic = chat.isGroup 
           ? `/topic/chat/group/${chat.id}`  
-          : `/queue/message/${chat.id}`;
+          : `/queue/message/${userId}/${chat.id}`;
 
           if (!this.subscribedChats.has(chatTopic)) {
             this.stompClient.subscribe(chatTopic, (message) => {
-              console.log("received msg", message.body);
-
               this.handleIncomingMessage(message);
             });
             this.subscribedChats.add(chatTopic);
-            console.log("Subscribed to:", chatTopic);
           }
         });
       },
@@ -213,7 +203,6 @@ class Home extends Component {
         console.error("WebSocket Error:", error);
       },
     });
-
     this.stompClient.activate();
   };
 
@@ -274,7 +263,6 @@ class Home extends Component {
   };
 
   closeGroupModal = () => {
-    console.log("hii", "hii");
     this.setState({ isModalVisible: false });
   };
 
